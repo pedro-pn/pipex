@@ -6,13 +6,11 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 17:30:08 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/15 16:00:32 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/15 16:57:41 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-#define PROCESS 3
 
 int	main(int argc, char *argv[])
 {
@@ -31,7 +29,6 @@ int	main(int argc, char *argv[])
 		pids[i] = fork();
 		if (pids[i] == 0)
 		{
-
 			close_child_pipes(pipes, i);
 			tokens = get_tokens(argv[i + 2]);
 			dup2(pipes[i][0], 0);
@@ -45,5 +42,7 @@ int	main(int argc, char *argv[])
 	close_main_pipes(pipes);
 	get_input(argv[1], pipes[0]);
 	get_output(argv[argc - 1], pipes[tokens.processes_n]);
+	clean_pipes(pipes);
+	free(pids);
 	return 0;
 }

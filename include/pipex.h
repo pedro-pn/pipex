@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:18:41 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/15 15:45:42 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/15 16:40:04 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ void	close_child_pipes(int **pipes, int process);
 void	close_main_pipes(int **pipes);
 void	get_input(char *file_in, int *pipe);
 void	get_output(char *file_out, int *pipe);
+void	clean_pipes(int **pipes);
 
 #endif
