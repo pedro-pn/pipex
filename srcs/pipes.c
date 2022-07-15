@@ -1,0 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipes.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/15 13:02:01 by ppaulo-d          #+#    #+#             */
+/*   Updated: 2022/07/15 16:01:11 by ppaulo-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "pipex.h"
+
+// Alloc memory for pipes
+int	**get_pipes(t_tokens tokens)
+{
+	int	index;
+	int	**pipes;
+
+	index = 0;
+	pipes = malloc(sizeof(*pipes) * (tokens.processes_n + 2));
+	pipes[tokens.processes_n + 1] = NULL;
+	while (index < tokens.processes_n + 1)
+	{
+		pipes[index] = malloc(2 * sizeof(**pipes));
+		index++;
+	}
+	return (pipes);
+}
+
+void	open_pipes(int **pipes)
+{
+	int	index;
+
+	index = 0;
+	while (pipes[index])
+	{
+		pipe(pipes[index]);
+		index++;
+	}
+}
+
+void	close_child_pipes(int **pipes, int process)
+{
+	int	index;
+
+	index = 0;
+	while (pipes[index])
+	{
+		if (index != process)
+			close(pipes[index][0]);
+		if (index != process + 1)
+			close(pipes[index][1]);
+		index++;
+	}
+}
+
+void	close_main_pipes(int **pipes)
+{
+	int	index;
+
+	index = 0;
+	while (pipes[index + 1])
+	{
+		close(pipes[index][0]);
+		if (index != 0)
+			close(pipes[index][1]);
+		index++;
+	}
+	close(pipes[index][1]);
+}

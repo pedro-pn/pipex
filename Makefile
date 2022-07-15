@@ -1,4 +1,4 @@
-SOURCES = main.c parser.c
+SOURCES = main.c parser.c pipes.c files.c
 NAME = pipex
 LIBFT = ./libft/libft.a
 SRCS_PATH = srcs

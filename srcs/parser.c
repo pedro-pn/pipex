@@ -6,12 +6,13 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:14:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/14 18:36:25 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/15 13:55:35 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+// Get user inputs and format properly
 t_tokens	get_tokens(char *argv)
 {
 	t_tokens	tokens;
@@ -26,4 +27,18 @@ t_tokens	get_tokens(char *argv)
 	free(temp);
 	tokens.cmd = cmds;
 	return (tokens);
+}
+
+// get total number of process (number of bash commands)
+void	get_processesnum(t_tokens *tokens, int argc)
+{
+	tokens->processes_n = argc - 3;
+}
+
+int	*get_pids(t_tokens tokens)
+{
+	int	*pids;
+
+	pids = malloc(sizeof(*pids) * tokens.processes_n);
+	return (pids);
 }
