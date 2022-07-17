@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:28:24 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/15 15:58:48 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/17 20:28:48 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	get_output(char *file_out, int *pipe)
 	int		file_fd;
 	int		b_read;
 
-	file_fd = open(file_out, O_RDWR | O_CREAT, 0664);
+	file_fd = open(file_out, O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	b_read = read(pipe[0], buff, sizeof(char));
 	while (b_read > 0)
 	{
@@ -44,5 +44,4 @@ void	get_output(char *file_out, int *pipe)
 	}
 	close(file_fd);
 	close(pipe[0]);
-	
 }
