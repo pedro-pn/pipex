@@ -6,27 +6,25 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:14:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/15 16:46:15 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/17 13:58:41 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 // Get user inputs and format properly
-t_tokens	get_tokens(char *argv)
+char	**get_cmd(char *argv)
 {
-	t_tokens	tokens;
 	char		*path;
-	char		**cmds;
+	char		**cmd;
 	char		*temp;
 
 	path = "/usr/bin/";
-	cmds = ft_split(argv, 32);
-	temp = cmds[0];
-	cmds[0] = ft_strjoin(path, temp);
+	cmd = ft_split(argv, 32);
+	temp = cmd[0];
+	cmd[0] = ft_strjoin(path, temp);
 	free(temp);
-	tokens.cmd = cmds;
-	return (tokens);
+	return (cmd);
 }
 
 // get total number of process (number of bash commands)

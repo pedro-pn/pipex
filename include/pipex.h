@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:18:41 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/15 16:40:04 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/17 13:58:46 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@
 
 typedef struct s_tokens
 {
-	char	*file1;
 	char	**cmd;
-	char	*file2;
+	int		**pipes;
+	int		*pids;
 	int		processes_n;
 }			t_tokens;
 
-t_tokens	get_tokens(char *argv);
+char	**get_cmd(char *argv);
 void	get_processesnum(t_tokens *tokens, int argc);
 int		*get_pids(t_tokens tokens);
 int 	**get_pipes(t_tokens tokens);
