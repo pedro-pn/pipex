@@ -1,4 +1,4 @@
-SOURCES = main.c parser.c pipes.c files.c
+SOURCES = main.c parser.c pipes.c files.c start.c
 NAME = pipex
 LIBFT = ./libft/libft.a
 SRCS_PATH = srcs
@@ -23,3 +23,6 @@ ${LIBFT}:
 
 clean:
 		rm -rf ${OBJS_PATH}/
+
+norma:
+		norminette srcs/ include/
