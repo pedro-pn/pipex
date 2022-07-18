@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:28:24 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/18 13:32:21 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/18 16:08:20 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,24 @@
 
 void	get_input(char *file_in, int *pipe)
 {
-	int		file_fd;
-	int		b_read;
-	char	buff[1];
+	int	file_fd;
 
 	file_fd = open(file_in, O_RDONLY);
 	if (file_fd == -1)
 	{
-		ft_printf("bash: %s: %s\n", file_in, strerror(errno));
+		dup2(pipe[0], 0);
 		close(pipe[1]);
-		return ;
+		close(pipe[0]);
+		exit(EXIT_FAILURE);
 	}
-	b_read = read(file_fd, buff, sizeof(char));
-	while (b_read > 0)
-	{
-		write(pipe[1], buff, sizeof(char));
-		b_read = read(file_fd, buff, sizeof(char));
-	}
+	dup2(file_fd, 0);
 	close(file_fd);
 	close(pipe[1]);
 }
 
 void	get_output(char *file_out, int *pipe)
 {
-	char	buff[1];
+	unsigned char	buff[1];
 	int		file_fd;
 	int		b_read;
 
@@ -48,12 +42,25 @@ void	get_output(char *file_out, int *pipe)
 		close(pipe[0]);
 		return ;
 	}
-	b_read = read(pipe[0], buff, sizeof(char));
+	b_read = read(pipe[0], buff, sizeof(buff));
 	while (b_read > 0)
 	{
-		write(file_fd, buff, sizeof(char));
-		b_read = read(pipe[0], buff, sizeof(char));
+		write(file_fd, buff, sizeof(buff));
+		b_read = read(pipe[0], buff, sizeof(buff));
 	}
 	close(file_fd);
 	close(pipe[0]);
+}
+
+int		open_file(t_tokens tokens)
+{
+	int	file_fd;
+
+	file_fd = open(tokens.file_in, O_RDONLY);
+	if (file_fd == -1)
+	{
+		ft_printf("bash: %s: %s\n", tokens.file_in, strerror(errno));
+		return -1;
+	}
+	return (file_fd);
 }

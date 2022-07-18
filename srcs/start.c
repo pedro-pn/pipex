@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 19:49:35 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/18 13:28:16 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/18 16:05:36 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	pipex_init(t_tokens *tokens, int argc, char *argv[])
 {
+	check_args(argc);
 	tokens->file_in = argv[1];
 	tokens->file_out = argv[argc - 1];
+	check_input(tokens->file_in);
 	tokens->processes_n = argc - 3;
 	tokens->pipes = get_pipes(*tokens);
 	tokens->pids = get_pids(*tokens);
@@ -33,7 +35,8 @@ int	*get_pids(t_tokens tokens)
 void	pipex_exec(t_tokens tokens, char *argv[])
 {
 	int	i;
-
+	int	fd;
+	
 	i = 0;
 	while (i < tokens.processes_n)
 	{
@@ -41,8 +44,13 @@ void	pipex_exec(t_tokens tokens, char *argv[])
 		if (tokens.pids[i] == 0)
 		{
 			close_child_pipes(tokens.pipes, i);
+			if (i == 0)
+			{
+				get_input(tokens.file_in, tokens.pipes[i]);
+			}
+			else
+				dup2(tokens.pipes[i][0], 0);
 			tokens.cmd = get_cmd(argv[i + 2]);
-			dup2(tokens.pipes[i][0], 0);
 			dup2(tokens.pipes[i + 1][1], 1);
 			close(tokens.pipes[i][0]);
 			close(tokens.pipes[i + 1][1]);

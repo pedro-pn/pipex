@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/13 17:30:08 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/18 15:40:15 by ppaulo-d         ###   ########.fr       */
+/*   Created: 2022/07/18 14:05:18 by ppaulo-d          #+#    #+#             */
+/*   Updated: 2022/07/18 16:05:10 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	main(int argc, char *argv[])
+void	check_args(int argc)
 {
-	t_tokens	tokens;
-
-	pipex_init(&tokens, argc, argv);
-	pipex_exec(tokens, argv);
-	close_main_pipes(tokens.pipes);
-//	get_input(tokens.file_in, (tokens.pipes)[0]);
-	get_output(tokens.file_out, (tokens.pipes)[tokens.processes_n]);
-	wait_processes(tokens.processes_n);
-	clean_pipes(tokens.pipes);
-	free(tokens.pids);
-	if (errno != 0)
+	if (argc < 4)
+	{
+		ft_printf("Invalid number of arguments");
 		exit(EXIT_FAILURE);
-	exit(EXIT_SUCCESS);
+	}
+}
+
+void	check_input(char *file_in)
+{
+	int	error;
+
+	error = access(file_in, F_OK | R_OK);
+	if (error != 0)
+		ft_printf("bash: %s: %s\n", file_in, strerror(errno));
 }

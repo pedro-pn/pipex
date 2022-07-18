@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:18:41 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/18 13:32:42 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/18 16:05:17 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,8 @@ void	clean_pipes(int **pipes);
 void	pipex_init(t_tokens *tokens, int argc, char *argv[]);
 void	pipex_exec(t_tokens tokens, char *argv[]);
 void	wait_processes(int processes_n);
+void	check_args(int argc);
+int		open_file(t_tokens tokens);
+void	check_input(char *file_in);
 
 #endif
