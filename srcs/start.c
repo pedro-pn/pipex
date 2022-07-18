@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 19:49:35 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/18 16:05:36 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/18 16:23:35 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	*get_pids(t_tokens tokens)
 void	pipex_exec(t_tokens tokens, char *argv[])
 {
 	int	i;
-	int	fd;
-	
+
 	i = 0;
 	while (i < tokens.processes_n)
 	{
@@ -45,14 +44,12 @@ void	pipex_exec(t_tokens tokens, char *argv[])
 		{
 			close_child_pipes(tokens.pipes, i);
 			if (i == 0)
-			{
 				get_input(tokens.file_in, tokens.pipes[i]);
-			}
 			else
 				dup2(tokens.pipes[i][0], 0);
 			tokens.cmd = get_cmd(argv[i + 2]);
-			dup2(tokens.pipes[i + 1][1], 1);
 			close(tokens.pipes[i][0]);
+			dup2(tokens.pipes[i + 1][1], 1);
 			close(tokens.pipes[i + 1][1]);
 			execve(tokens.cmd[0], tokens.cmd, NULL);
 		}
