@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 17:30:08 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/18 13:37:46 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/18 13:51:15 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@ int	main(int argc, char *argv[])
 	wait_processes(tokens.processes_n);
 	clean_pipes(tokens.pipes);
 	free(tokens.pids);
-	return (0);
+	if (errno != 0)
+		exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
