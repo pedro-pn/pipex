@@ -6,14 +6,16 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 19:49:35 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/17 20:36:12 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/18 13:28:16 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	pipex_init(t_tokens *tokens, int argc)
+void	pipex_init(t_tokens *tokens, int argc, char *argv[])
 {
+	tokens->file_in = argv[1];
+	tokens->file_out = argv[argc - 1];
 	tokens->processes_n = argc - 3;
 	tokens->pipes = get_pipes(*tokens);
 	tokens->pids = get_pids(*tokens);

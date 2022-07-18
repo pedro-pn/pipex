@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:18:41 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/17 20:34:55 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/18 13:32:42 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@
 # include "libft.h"
 # include <errno.h>
 # include <stdio.h>
+# include <string.h>
 
 typedef struct s_tokens
 {
 	char	**cmd;
+	char	*file_in;
+	char	*file_out;
 	int		**pipes;
 	int		*pids;
 	int		processes_n;
@@ -37,7 +40,7 @@ void	close_main_pipes(int **pipes);
 void	get_input(char *file_in, int *pipe);
 void	get_output(char *file_out, int *pipe);
 void	clean_pipes(int **pipes);
-void	pipex_init(t_tokens *tokens, int argc);
+void	pipex_init(t_tokens *tokens, int argc, char *argv[]);
 void	pipex_exec(t_tokens tokens, char *argv[]);
 void	wait_processes(int processes_n);
 
