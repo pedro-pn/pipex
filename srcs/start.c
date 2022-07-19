@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 19:49:35 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/19 13:57:39 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/19 15:38:28 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,16 @@ void	pipex_exec(t_tokens tokens, char *argv[], char *envp[])
 			else
 				dup2(tokens.pipes[i][0], 0);
 			tokens.cmd = get_cmd(argv[i + 2]);
-			tokens.path = get_path(tokens.cmd[0]);
 			close(tokens.pipes[i][0]);
 			dup2(tokens.pipes[i + 1][1], 1);
 			close(tokens.pipes[i + 1][1]);
-			execve(tokens.path, tokens.cmd, NULL);
+			if (get_path(&tokens, tokens.cmd[0], envp) == 0)
+				execve(tokens.path, tokens.cmd, NULL);
+			clean_array(tokens.cmd);
+			free(tokens.pids);
+			clean_pipes(tokens.pipes);
+		//	free(tokens.path);
+			exit(127);
 		}
 		i++;
 	}
@@ -61,11 +66,19 @@ void	pipex_exec(t_tokens tokens, char *argv[], char *envp[])
 void	wait_processes(int processes_n)
 {
 	int	i;
-
+	int	status;
+	int	status_code;
+	
 	i = 0;
 	while (i < processes_n)
 	{
-		wait(NULL);
+		wait(&status);
+		if (WIFEXITED(status))
+		{
+			status_code = WEXITSTATUS(status);
+			if (status_code == 127)
+				ft_printf("erro!");
+		}
 		i++;
 	}
 }

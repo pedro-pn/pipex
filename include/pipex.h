@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:18:41 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/19 13:57:13 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/19 15:26:37 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	wait_processes(int processes_n);
 void	check_args(int argc);
 int		open_file(t_tokens tokens);
 void	check_input(char *file_in);
-char	*get_path(char	*cmd);
+int		get_path(t_tokens *tokens, char *cmd, char *envp[]);
+void	clean_array(char **array);
 
 #endif
