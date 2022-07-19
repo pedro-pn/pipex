@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:18:41 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/18 16:05:17 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/19 13:57:13 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 typedef struct s_tokens
 {
 	char	**cmd;
+	char	*path;
 	char	*file_in;
 	char	*file_out;
 	int		**pipes;
@@ -41,10 +42,11 @@ void	get_input(char *file_in, int *pipe);
 void	get_output(char *file_out, int *pipe);
 void	clean_pipes(int **pipes);
 void	pipex_init(t_tokens *tokens, int argc, char *argv[]);
-void	pipex_exec(t_tokens tokens, char *argv[]);
+void	pipex_exec(t_tokens tokens, char *argv[], char *envp[]);
 void	wait_processes(int processes_n);
 void	check_args(int argc);
 int		open_file(t_tokens tokens);
 void	check_input(char *file_in);
+char	*get_path(char	*cmd);
 
 #endif
