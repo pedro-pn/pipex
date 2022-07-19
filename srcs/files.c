@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:28:24 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/18 16:26:07 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/19 17:04:10 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	get_input(char *file_in, int *pipe)
 	close(pipe[1]);
 }
 
-void	get_output(char *file_out, int *pipe)
+int	get_output(char *file_out, int *pipe)
 {
 	unsigned char	buff[1];
 	int				file_fd;
@@ -39,7 +39,7 @@ void	get_output(char *file_out, int *pipe)
 	{
 		ft_printf("bash: %s: %s\n", file_out, strerror(errno));
 		close(pipe[0]);
-		return ;
+		return (-1);
 	}
 	b_read = read(pipe[0], buff, sizeof(buff));
 	while (b_read > 0)
@@ -49,4 +49,5 @@ void	get_output(char *file_out, int *pipe)
 	}
 	close(file_fd);
 	close(pipe[0]);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:18:41 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/19 15:26:37 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/19 20:12:27 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ void	open_pipes(int **pipes);
 void	close_child_pipes(int **pipes, int process);
 void	close_main_pipes(int **pipes);
 void	get_input(char *file_in, int *pipe);
-void	get_output(char *file_out, int *pipe);
+int		get_output(char *file_out, int *pipe);
 void	clean_pipes(int **pipes);
 void	pipex_init(t_tokens *tokens, int argc, char *argv[]);
-void	pipex_exec(t_tokens tokens, char *argv[], char *envp[]);
-void	wait_processes(int processes_n);
+void		pipex_exec(t_tokens *tokens, char *argv[], char *envp[]);
+int		wait_processes(t_tokens *tokens, int processes_n);
 void	check_args(int argc);
 int		open_file(t_tokens tokens);
 void	check_input(char *file_in);
