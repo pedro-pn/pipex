@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:28:24 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/19 17:04:10 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/20 10:52:58 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	get_output(char *file_out, int *pipe)
 	file_fd = open(file_out, O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	if (file_fd == -1)
 	{
-		ft_printf("bash: %s: %s\n", file_out, strerror(errno));
+		ft_printf("%s: %s\n", file_out, strerror(errno));
 		close(pipe[0]);
 		return (-1);
 	}

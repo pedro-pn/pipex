@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 19:49:35 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/20 10:47:59 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/20 10:51:54 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	pipex_exec(t_tokens *tokens, char *argv[], char *envp[])
 		tokens->cmd = get_cmd(argv[process + 2]);
 		if (get_path(tokens, tokens->cmd[0], envp)
 			&& process == tokens->processes_n - 1)
-			ft_printf("bash: %s: command not found\n", tokens->cmd[0]);
+			ft_printf("%s: command not found\n", tokens->cmd[0]);
 		tokens->pids[process] = fork();
 		if (tokens->pids[process] == 0)
 			exec_child(tokens, envp, process);
