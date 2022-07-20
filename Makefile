@@ -11,6 +11,8 @@ CC = gcc
 
 all: ${NAME}
 
+bonus: all
+
 ${NAME}: ${LIBFT} ${OBJS}
 		${CC} ${OBJS} ${LIBFT} -o ${NAME}
 

@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:18:41 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/19 20:12:27 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/20 10:45:30 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <errno.h>
 # include <stdio.h>
 # include <string.h>
+
+# define NOCMD 127
 
 typedef struct s_tokens
 {
@@ -42,12 +44,14 @@ void	get_input(char *file_in, int *pipe);
 int		get_output(char *file_out, int *pipe);
 void	clean_pipes(int **pipes);
 void	pipex_init(t_tokens *tokens, int argc, char *argv[]);
-void		pipex_exec(t_tokens *tokens, char *argv[], char *envp[]);
+void	pipex_exec(t_tokens *tokens, char *argv[], char *envp[]);
 int		wait_processes(t_tokens *tokens, int processes_n);
 void	check_args(int argc);
 int		open_file(t_tokens tokens);
 void	check_input(char *file_in);
 int		get_path(t_tokens *tokens, char *cmd, char *envp[]);
 void	clean_array(char **array);
+void	exec_child(t_tokens *tokens, char *envp[], int process);
+int		check_path(t_tokens *tokens, char **bin_paths, char *cmd);
 
 #endif
