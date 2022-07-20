@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:18:41 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/20 14:14:15 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/20 15:28:26 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_data
 	int		**pipes;
 	int		*pids;
 	int		processes_n;
+	int		here_doc;
 }			t_data;
 
 // pipex_init
@@ -46,7 +47,7 @@ void	exec_child(t_data *data, char *envp[], int process);
 int		wait_processes(t_data *data, int processes_n);
 // Parser functions
 
-char	**get_cmd(char *argv);
+char	**get_cmd(t_data data, char *argv, int process);
 int		get_path(t_data *data, char *cmd, char *envp[]);
 int		check_path(t_data *data, char **bin_paths, char *cmd);
 void	clean_quotes(char *argv);
@@ -66,6 +67,6 @@ int		get_output(char *file_out, int *pipe);
 // error functions
 
 void	check_args(int argc);
-void	check_input(char *file_in);
+int		check_input(char *file_in);
 
 #endif
