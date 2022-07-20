@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 14:05:18 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/18 16:26:17 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/20 14:43:01 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	check_args(int argc)
 {
-	if (argc < 4)
+	if (argc < 5)
 	{
 		ft_printf("Invalid number of arguments");
 		exit(EXIT_FAILURE);
