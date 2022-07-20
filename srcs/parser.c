@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:14:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/20 13:43:09 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/20 14:15:01 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	clean_quotes(char *argv)
 	}
 }
 
-int	get_path(t_tokens *tokens, char *cmd, char *envp[])
+int	get_path(t_data *data, char *cmd, char *envp[])
 {
 	char	**bin_paths;
 	int		index;
@@ -65,12 +65,12 @@ int	get_path(t_tokens *tokens, char *cmd, char *envp[])
 		}
 		index++;
 	}
-	error = check_path(tokens, bin_paths, cmd);
+	error = check_path(data, bin_paths, cmd);
 	clean_array(bin_paths);
 	return (error);
 }
 
-int	check_path(t_tokens *tokens, char **bin_paths, char *cmd)
+int	check_path(t_data *data, char **bin_paths, char *cmd)
 {
 	int		index;
 	char	*path;
@@ -93,7 +93,7 @@ int	check_path(t_tokens *tokens, char **bin_paths, char *cmd)
 		free(path);
 		path = NULL;
 	}
-	tokens->path = path;
+	data->path = path;
 	return (error);
 }
 

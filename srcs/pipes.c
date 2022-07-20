@@ -6,22 +6,22 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 13:02:01 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/18 16:23:40 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/20 14:15:00 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 // Alloc memory for pipes
-int	**get_pipes(t_tokens tokens)
+int	**get_pipes(t_data data)
 {
 	int	index;
 	int	**pipes;
 
 	index = 0;
-	pipes = malloc(sizeof(*pipes) * (tokens.processes_n + 2));
-	pipes[tokens.processes_n + 1] = NULL;
-	while (index < tokens.processes_n + 1)
+	pipes = malloc(sizeof(*pipes) * (data.processes_n + 2));
+	pipes[data.processes_n + 1] = NULL;
+	while (index < data.processes_n + 1)
 	{
 		pipes[index] = malloc(2 * sizeof(**pipes));
 		index++;

@@ -6,72 +6,72 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 19:49:35 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/20 10:51:54 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/20 14:14:57 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	pipex_init(t_tokens *tokens, int argc, char *argv[])
+void	pipex_init(t_data *data, int argc, char *argv[])
 {
 	check_args(argc);
-	tokens->file_in = argv[1];
-	tokens->file_out = argv[argc - 1];
-	check_input(tokens->file_in);
-	tokens->processes_n = argc - 3;
-	tokens->pipes = get_pipes(*tokens);
-	tokens->pids = get_pids(*tokens);
-	open_pipes(tokens->pipes);
+	data->file_in = argv[1];
+	data->file_out = argv[argc - 1];
+	check_input(data->file_in);
+	data->processes_n = argc - 3;
+	data->pipes = get_pipes(*data);
+	data->pids = get_pids(*data);
+	open_pipes(data->pipes);
 }
 
-int	*get_pids(t_tokens tokens)
+int	*get_pids(t_data data)
 {
 	int	*pids;
 
-	pids = malloc(sizeof(*pids) * tokens.processes_n);
+	pids = malloc(sizeof(*pids) * data.processes_n);
 	return (pids);
 }
 
-void	pipex_exec(t_tokens *tokens, char *argv[], char *envp[])
+void	pipex_exec(t_data *data, char *argv[], char *envp[])
 {
 	int	process;
 
 	process = 0;
-	while (process < tokens->processes_n)
+	while (process < data->processes_n)
 	{
-		tokens->cmd = get_cmd(argv[process + 2]);
-		if (get_path(tokens, tokens->cmd[0], envp)
-			&& process == tokens->processes_n - 1)
-			ft_printf("%s: command not found\n", tokens->cmd[0]);
-		tokens->pids[process] = fork();
-		if (tokens->pids[process] == 0)
-			exec_child(tokens, envp, process);
-		clean_array(tokens->cmd);
-		if (tokens->path)
-			free(tokens->path);
+		data->cmd = get_cmd(argv[process + 2]);
+		if (get_path(data, data->cmd[0], envp)
+			&& process == data->processes_n - 1)
+			ft_printf("%s: command not found\n", data->cmd[0]);
+		data->pids[process] = fork();
+		if (data->pids[process] == 0)
+			exec_child(data, envp, process);
+		clean_array(data->cmd);
+		if (data->path)
+			free(data->path);
 		process++;
 	}
 }
 
-void	exec_child(t_tokens *tokens, char *envp[], int process)
+void	exec_child(t_data *data, char *envp[], int process)
 {
-	close_child_pipes(tokens->pipes, process);
+	close_child_pipes(data->pipes, process);
 	if (process == 0)
-		get_input(tokens->file_in, tokens->pipes[process]);
+		get_input(data->file_in, data->pipes[process]);
 	else
-		dup2(tokens->pipes[process][0], 0);
-	close(tokens->pipes[process][0]);
-	dup2(tokens->pipes[process + 1][1], 1);
-	close(tokens->pipes[process + 1][1]);
-	if (tokens->path)
-		execve(tokens->path, tokens->cmd, envp);
-	clean_array(tokens->cmd);
-	free(tokens->pids);
-	clean_pipes(tokens->pipes);
+		dup2(data->pipes[process][0], 0);
+	close(data->pipes[process][0]);
+	dup2(data->pipes[process + 1][1], 1);
+	close(data->pipes[process + 1][1]);
+	if (data->path)
+		execve(data->path, data->cmd, envp);
+	clean_array(data->cmd);
+	free(data->pids);
+	clean_pipes(data->pipes);
 	exit(NOCMD);
 }
 
-int	wait_processes(t_tokens *tokens, int processes_n)
+int	wait_processes(t_data *data, int processes_n)
 {
 	int	process;
 	int	status;
@@ -80,7 +80,7 @@ int	wait_processes(t_tokens *tokens, int processes_n)
 	process = 0;
 	while (process < processes_n)
 	{
-		waitpid(tokens->pids[process], &status, 0);
+		waitpid(data->pids[process], &status, 0);
 		if (WIFEXITED(status))
 		{
 			if (process == processes_n - 1)
