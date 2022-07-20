@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 04:02:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/06 22:11:36 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/20 13:34:11 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*get_next_line(int fd);
+void	*ft_memrpl(char *s, int old, int new, size_t n);
 // ft_printf
 int		ft_printf(const char *format, ...);
 // get conversion specification functions

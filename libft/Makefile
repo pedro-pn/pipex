@@ -10,7 +10,7 @@ SOURCES	=	ft_isalpha.c ft_tolower.c ft_toupper.c ft_isdigit.c ft_isalnum.c \
 			ft_lstmap.c get_next_line.c ft_printf.c \
 			ft_printf_utils_1.c ft_printf_hexa.c \
 			ft_utoa.c ft_printf_utils_2.c \
-			ft_printf_utils_3.c ft_printf_utils_4.c ft_atoi_base.c
+			ft_printf_utils_3.c ft_printf_utils_4.c ft_atoi_base.c ft_memrpl.c
 SRCS_PATH = srcs
 OBJS_PATH = objs
 SRCS = ${addprefix ${SRCS_PATH}/, ${SOURCES}}
