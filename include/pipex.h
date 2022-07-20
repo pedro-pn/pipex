@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:18:41 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/20 10:45:30 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/20 13:39:59 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ int		get_path(t_tokens *tokens, char *cmd, char *envp[]);
 void	clean_array(char **array);
 void	exec_child(t_tokens *tokens, char *envp[], int process);
 int		check_path(t_tokens *tokens, char **bin_paths, char *cmd);
+void	clean_quotes(char *argv);
 
 #endif

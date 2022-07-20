@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:14:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/20 10:47:03 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/20 13:43:09 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,37 @@
 char	**get_cmd(char *argv)
 {
 	char	**cmd;
+	int		index_cmd;
 
+	clean_quotes(argv);
 	cmd = ft_split(argv, ' ');
+	index_cmd = -1;
+	while (index_cmd++, cmd[index_cmd])
+		ft_memrpl(cmd[index_cmd], 1, 32, ft_strlen(cmd[index_cmd]));
 	return (cmd);
+}
+
+void	clean_quotes(char *argv)
+{
+	int	index;
+	int	flag;
+
+	index = 0;
+	flag = 1;
+	while (argv[index])
+	{
+		if (argv[index] == 39)
+		{
+			argv[index] = 32;
+			flag *= -1;
+		}
+		else if (flag == -1)
+		{
+			if (argv[index] == ' ')
+				argv[index] = 1;
+		}
+		index++;
+	}
 }
 
 int	get_path(t_tokens *tokens, char *cmd, char *envp[])
