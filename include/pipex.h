@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:18:41 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/20 18:54:22 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/21 11:04:42 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 # include <unistd.h>
 # include <sys/wait.h>
 # include <fcntl.h>
-# include "libft.h"
 # include <errno.h>
-# include <stdio.h>
 # include <string.h>
+# include "libft.h"
 
 # define NOCMD 127
+# define TRUE 1
+# define FALSE 0
 
 typedef struct s_data
 {

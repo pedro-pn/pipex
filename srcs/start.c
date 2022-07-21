@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 19:49:35 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/20 18:38:23 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/21 10:43:15 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	pipex_exec(t_data *data, char *argv[], char *envp[])
 	int	process;
 
 	process = 0;
-	if (data->here_doc == 1)
+	if (data->here_doc == TRUE)
 		process++;
 	while (process < data->processes_n)
 	{
@@ -80,7 +80,7 @@ int	wait_processes(t_data *data, int processes_n)
 	int	status_code;
 
 	process = 0;
-	if (data->here_doc == 1)
+	if (data->here_doc == TRUE)
 		process++;
 	while (process < processes_n)
 	{
