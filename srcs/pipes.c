@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 13:02:01 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/20 18:15:41 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/21 12:54:57 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	**get_pipes(t_data data)
 
 	index = 0;
 	pipes = malloc(sizeof(*pipes) * (data.processes_n + 2));
+	if (!pipes)
+		return (NULL);
 	pipes[data.processes_n + 1] = NULL;
 	while (index < data.processes_n + 1)
 	{
@@ -29,16 +31,18 @@ int	**get_pipes(t_data data)
 	return (pipes);
 }
 
-void	open_pipes(int **pipes)
+int	open_pipes(int **pipes)
 {
 	int	index;
 
 	index = 0;
 	while (pipes[index])
 	{
-		pipe(pipes[index]);
+		if (pipe(pipes[index]) == -1)
+			return (1);
 		index++;
 	}
+	return (0);
 }
 
 void	close_child_pipes(int **pipes, int process)

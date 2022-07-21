@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 19:49:35 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/21 11:21:54 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/21 12:56:02 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ void	pipex_init(t_data *data, int argc, char *argv[])
 	data->file_out = argv[argc - 1];
 	data->here_doc = check_input(data->file_in);
 	data->processes_n = argc - 3;
-	data->pipes = get_pipes(*data);
 	data->pids = get_pids(*data);
-	open_pipes(data->pipes);
+	if (data->pids == NULL)
+		malloc_error();
+	data->pipes = get_pipes(*data);
+	if (open_pipes(data->pipes))
+		pipe_error(data);
 }
 
 int	*get_pids(t_data data)
@@ -46,7 +49,9 @@ void	pipex_exec(t_data *data, char *argv[], char *envp[])
 			&& process == data->processes_n - 1)
 			ft_printf("%s: command not found\n", data->cmd[0]);
 		data->pids[process] = fork();
-		if (data->pids[process] == 0)
+		if (data->pids[process] == -1)
+			process_error(data);
+		else if (data->pids[process] == 0)
 			exec_child(data, envp, process);
 		clean_array(data->cmd);
 		if (data->path)
@@ -61,9 +66,9 @@ void	exec_child(t_data *data, char *envp[], int process)
 	if (process == 0)
 		get_input(data->file_in, data->pipes[process]);
 	else
-		dup2(data->pipes[process][0], 0);
+		dup2(data->pipes[process][0], STDIN_FILENO);
 	close(data->pipes[process][0]);
-	dup2(data->pipes[process + 1][1], 1);
+	dup2(data->pipes[process + 1][1], STDOUT_FILENO);
 	close(data->pipes[process + 1][1]);
 	if (data->path)
 		execve(data->path, data->cmd, envp);

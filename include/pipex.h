@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:18:41 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/21 11:22:11 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/21 12:55:32 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <stdio.h>
 # include <string.h>
 # include "libft.h"
 
@@ -56,7 +57,7 @@ void	clean_array(char **array);
 // Pipes functions
 
 int		**get_pipes(t_data data);
-void	open_pipes(int **pipes);
+int		open_pipes(int **pipes);
 void	close_child_pipes(int **pipes, int process);
 void	close_main_pipes(int **pipes, int here_doc);
 void	clean_pipes(int **pipes);
@@ -70,5 +71,8 @@ int		get_output(char *file_out, int *pipe, int here_doc);
 
 void	check_args(int argc);
 int		check_input(char *file_in);
+void	malloc_error(void);
+void	pipe_error(t_data *data);
+void	process_error(t_data *data);
 
 #endif

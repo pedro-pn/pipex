@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:28:24 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/20 18:51:52 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/21 12:47:21 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	get_output(char *file_out, int *pipe, int here_doc)
 	int				b_read;
 
 	if (here_doc == 1)
-		file_fd = open(file_out, O_APPEND | O_WRONLY, 0664);
+		file_fd = open(file_out, O_APPEND | O_WRONLY | O_CREAT, 0664);
 	else
 		file_fd = open(file_out, O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	if (file_fd == -1)
@@ -63,7 +63,9 @@ void	get_user_input(t_data *data, char *delimiter)
 
 	dlm_len = ft_strlen(delimiter);
 	buff = ft_calloc(dlm_len + 1, sizeof(*buff));
-	while (read(0, buff, dlm_len))
+	if (!buff)
+		return ;
+	while (read(STDIN_FILENO, buff, dlm_len))
 	{
 		i = 0;
 		if (!ft_strncmp(buff, delimiter, dlm_len))
