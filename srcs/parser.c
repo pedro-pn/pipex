@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:14:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/20 15:55:14 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:50:03 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ char	**get_cmd(t_data data, char *argv, int process)
 	index_cmd = -1;
 	while (index_cmd++, cmd[index_cmd])
 		ft_memrpl(cmd[index_cmd], 1, 32, ft_strlen(cmd[index_cmd]));
-//	if (data.here_doc == 1 && process == 0)
 	return (cmd);
 }
 

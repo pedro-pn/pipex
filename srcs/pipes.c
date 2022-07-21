@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 13:02:01 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/20 14:15:00 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/20 18:15:41 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	close_child_pipes(int **pipes, int process)
 	}
 }
 
-void	close_main_pipes(int **pipes)
+void	close_main_pipes(int **pipes, int here_doc)
 {
 	int	index;
 
@@ -64,7 +64,8 @@ void	close_main_pipes(int **pipes)
 	while (pipes[index + 1])
 	{
 		close(pipes[index][0]);
-		close(pipes[index][1]);
+		if (!(index == 1 && here_doc == 1))
+			close(pipes[index][1]);
 		index++;
 	}
 	close(pipes[index][1]);

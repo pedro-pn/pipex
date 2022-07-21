@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:28:24 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/20 10:52:58 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/20 18:51:52 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,16 @@ void	get_input(char *file_in, int *pipe)
 	close(pipe[1]);
 }
 
-int	get_output(char *file_out, int *pipe)
+int	get_output(char *file_out, int *pipe, int here_doc)
 {
 	unsigned char	buff[1];
 	int				file_fd;
 	int				b_read;
 
-	file_fd = open(file_out, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	if (here_doc == 1)
+		file_fd = open(file_out, O_APPEND | O_WRONLY, 0664);
+	else
+		file_fd = open(file_out, O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	if (file_fd == -1)
 	{
 		ft_printf("%s: %s\n", file_out, strerror(errno));
@@ -50,4 +53,28 @@ int	get_output(char *file_out, int *pipe)
 	close(file_fd);
 	close(pipe[0]);
 	return (0);
+}
+
+void	get_user_input(t_data *data, char *delimiter)
+{
+	char	*buff;
+	int		i;
+	int		dlm_len;
+
+	dlm_len = ft_strlen(delimiter);
+	buff = ft_calloc(dlm_len + 1, sizeof(*buff));
+	while (read(0, buff, dlm_len))
+	{
+		i = 0;
+		if (!ft_strncmp(buff, delimiter, dlm_len))
+			break ;
+		while (buff[i])
+		{
+			write(data->pipes[1][1], &buff[i], 1);
+			i++;
+		}
+		ft_memset(buff, 0, dlm_len);
+	}
+	close(data->pipes[1][1]);
+	free(buff);
 }

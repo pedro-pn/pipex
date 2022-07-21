@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:18:41 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/20 15:28:26 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/20 18:54:22 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,13 @@ void	clean_array(char **array);
 int		**get_pipes(t_data data);
 void	open_pipes(int **pipes);
 void	close_child_pipes(int **pipes, int process);
-void	close_main_pipes(int **pipes);
+void	close_main_pipes(int **pipes, int here_doc);
 void	clean_pipes(int **pipes);
 // i/o files functions
 
 void	get_input(char *file_in, int *pipe);
-int		get_output(char *file_out, int *pipe);
+void	get_user_input(t_data *data, char *delimiter);
+int		get_output(char *file_out, int *pipe, int here_doc);
 
 // error functions
 
