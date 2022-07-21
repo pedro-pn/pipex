@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:18:41 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/21 11:04:42 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/21 11:22:11 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	exec_child(t_data *data, char *envp[], int process);
 int		wait_processes(t_data *data, int processes_n);
 // Parser functions
 
-char	**get_cmd(t_data data, char *argv, int process);
+char	**get_cmd(char *argv);
 int		get_path(t_data *data, char *cmd, char *envp[]);
 int		check_path(t_data *data, char **bin_paths, char *cmd);
 void	clean_quotes(char *argv);

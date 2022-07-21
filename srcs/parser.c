@@ -6,14 +6,14 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:14:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/20 17:50:03 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/21 11:22:04 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 // Get user inputs and format properly
-char	**get_cmd(t_data data, char *argv, int process)
+char	**get_cmd(char *argv)
 {
 	char	**cmd;
 	int		index_cmd;

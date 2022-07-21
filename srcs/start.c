@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 19:49:35 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/21 10:43:15 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/21 11:21:54 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	pipex_exec(t_data *data, char *argv[], char *envp[])
 		process++;
 	while (process < data->processes_n)
 	{
-		data->cmd = get_cmd(*data, argv[process + 2], process);
+		data->cmd = get_cmd(argv[process + 2]);
 		if (get_path(data, data->cmd[0], envp)
 			&& process == data->processes_n - 1)
 			ft_printf("%s: command not found\n", data->cmd[0]);
