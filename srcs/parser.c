@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d < ppaulo-d@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:14:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/21 12:20:04 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/21 18:13:33 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	get_path(t_data *data, char *cmd, char *envp[])
 	int		error;
 
 	index = 0;
+	bin_paths = NULL;
 	while (envp[index])
 	{
 		if (!ft_strncmp("PATH", envp[index], 4))
