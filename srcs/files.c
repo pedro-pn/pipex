@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:28:24 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/21 12:47:21 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/21 22:14:17 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,26 @@ void	get_user_input(t_data *data, char *delimiter)
 	char	*buff;
 	int		i;
 	int		dlm_len;
+	int		middle;
 
+	delimiter = ft_strjoin(delimiter, "\n");
 	dlm_len = ft_strlen(delimiter);
+	middle = 0;
 	buff = ft_calloc(dlm_len + 1, sizeof(*buff));
 	if (!buff)
 		return ;
-	while (read(STDIN_FILENO, buff, dlm_len))
+	while (ft_memset(buff, 0, dlm_len), read(STDIN_FILENO, buff, dlm_len))
 	{
-		i = 0;
-		if (!ft_strncmp(buff, delimiter, dlm_len))
+		i = -1;
+		if ((!ft_strncmp(buff, delimiter, dlm_len)) && middle == 0)
 			break ;
-		while (buff[i])
-		{
+		while (i++, buff[i])
 			write(data->pipes[1][1], &buff[i], 1);
-			i++;
-		}
-		ft_memset(buff, 0, dlm_len);
+		middle = 1;
+		if (buff[i - 1] == '\n')
+			middle = 0;
 	}
+	free(delimiter);
 	close(data->pipes[1][1]);
 	free(buff);
 }
