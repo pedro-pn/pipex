@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 17:30:08 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/21 11:05:29 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/22 11:45:05 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int	main(int argc, char *argv[], char *envp[])
 	if (get_output(data.file_out, (data.pipes)[data.processes_n], data.here_doc)
 		== -1)
 		exit_status = 1;
-	clean_pipes(data.pipes);
-	free(data.pids);
+	clean_data(&data);
 	if (exit_status != 0)
 		exit(exit_status);
 	exit(EXIT_SUCCESS);

@@ -6,40 +6,42 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 13:02:01 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/21 12:54:57 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/22 11:41:56 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 // Alloc memory for pipes
-int	**get_pipes(t_data data)
+int	**get_pipes(t_data *data)
 {
 	int	index;
 	int	**pipes;
 
 	index = 0;
-	pipes = malloc(sizeof(*pipes) * (data.processes_n + 2));
+	pipes = malloc(sizeof(*pipes) * (data->processes_n + 2));
 	if (!pipes)
-		return (NULL);
-	pipes[data.processes_n + 1] = NULL;
-	while (index < data.processes_n + 1)
+		error_handle(data, MALLOC_ERROR);
+	data->pipes[data->processes_n + 1] = NULL;
+	while (index < data->processes_n + 1)
 	{
 		pipes[index] = malloc(2 * sizeof(**pipes));
+		if (!pipes[index])
+			error_handle(data, MALLOC_ERROR);
 		index++;
 	}
 	return (pipes);
 }
 
-int	open_pipes(int **pipes)
+int	open_pipes(t_data *data)
 {
 	int	index;
 
 	index = 0;
-	while (pipes[index])
+	while (data->pipes[index])
 	{
-		if (pipe(pipes[index]) == -1)
-			return (1);
+		if (pipe(data->pipes[index]) == -1)
+			error_handle(data, PIPE_ERROR);
 		index++;
 	}
 	return (0);
@@ -73,17 +75,4 @@ void	close_main_pipes(int **pipes, int here_doc)
 		index++;
 	}
 	close(pipes[index][1]);
-}
-
-void	clean_pipes(int **pipes)
-{
-	int	index;
-
-	index = 0;
-	while (pipes[index])
-	{
-		free(pipes[index]);
-		index++;
-	}
-	free(pipes);
 }

@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 19:49:35 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/21 12:56:02 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/22 11:44:05 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,21 @@ void	pipex_init(t_data *data, int argc, char *argv[])
 	data->file_out = argv[argc - 1];
 	data->here_doc = check_input(data->file_in);
 	data->processes_n = argc - 3;
-	data->pids = get_pids(*data);
-	if (data->pids == NULL)
-		malloc_error();
-	data->pipes = get_pipes(*data);
-	if (open_pipes(data->pipes))
-		pipe_error(data);
+	data->pids = NULL;
+	data->pipes = NULL;
+	data->path = NULL;
+	data->pids = get_pids(data);
+	data->pipes = get_pipes(data);
+	open_pipes(data);
 }
 
-int	*get_pids(t_data data)
+int	*get_pids(t_data *data)
 {
 	int	*pids;
 
-	pids = malloc(sizeof(*pids) * data.processes_n);
+	pids = malloc(sizeof(*pids) * data->processes_n);
+	if (!pids)
+		error_handle(data, MALLOC_ERROR);
 	return (pids);
 }
 
@@ -50,10 +52,10 @@ void	pipex_exec(t_data *data, char *argv[], char *envp[])
 			ft_printf("%s: command not found\n", data->cmd[0]);
 		data->pids[process] = fork();
 		if (data->pids[process] == -1)
-			process_error(data);
+			error_handle(data, PROCESS_ERROR);
 		else if (data->pids[process] == 0)
 			exec_child(data, envp, process);
-		clean_array(data->cmd);
+		clean_array((void **)data->cmd);
 		if (data->path)
 			free(data->path);
 		process++;
@@ -72,9 +74,7 @@ void	exec_child(t_data *data, char *envp[], int process)
 	close(data->pipes[process + 1][1]);
 	if (data->path)
 		execve(data->path, data->cmd, envp);
-	clean_array(data->cmd);
-	free(data->pids);
-	clean_pipes(data->pipes);
+	clean_data(data);
 	exit(NOCMD);
 }
 

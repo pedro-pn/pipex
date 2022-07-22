@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d < ppaulo-d@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:14:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/21 18:13:33 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/22 11:43:22 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	get_path(t_data *data, char *cmd, char *envp[])
 		index++;
 	}
 	error = check_path(data, bin_paths, cmd);
-	clean_array(bin_paths);
+	clean_array((void **)bin_paths);
 	return (error);
 }
 
@@ -98,7 +98,7 @@ int	check_path(t_data *data, char **bin_paths, char *cmd)
 	return (error);
 }
 
-void	clean_array(char **array)
+void	clean_array(void **array)
 {
 	int	i;
 

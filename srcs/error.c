@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 14:05:18 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/21 12:53:58 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/22 11:38:40 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,36 +33,36 @@ int	check_input(char *file_in)
 	return (FALSE);
 }
 
-void	pipe_error(t_data *data)
+void	error_handle(t_data *data, int code)
 {
-	clean_pipes(data->pipes);
-	free(data->pids);
-	perror("pipex");
+	if (code == PIPE_ERROR)
+		perror("pipex");
+	else if (code == MALLOC_ERROR)
+		write(STDERR_FILENO, "Failed to alloc memory\n", 23);
+	else if (code == PROCESS_ERROR)
+		perror("pipex");
+	clean_data(data);
 	exit(EXIT_FAILURE);
 }
 
-void	malloc_error(void)
+void	clean_data(t_data *data)
 {
-	write(STDERR_FILENO, "Failed to alloc memory\n", 23);
-	exit(EXIT_FAILURE);
-}
-
-void	process_error(t_data *data)
-{
-	int	index;
+	int index;
 
 	index = 0;
-	while (data->pipes[index])
+	if (data->pids)
+		free(data->pids);
+	if (data->cmd)
+		clean_array((void **)data->cmd);
+	if(data->pipes)
 	{
-		close(data->pipes[index][0]);
-		close(data->pipes[index][1]);
-		index++;
+		while (data->pipes[index])
+		{
+			close(data->pipes[index][0]);
+			close(data->pipes[index][1]);
+			index++;
+		}
+		clean_array((void **)data->pipes);
 	}
-	clean_pipes(data->pipes);
-	free(data->pids);
-	if (data->path)
-		free(data->path);
-	clean_array(data->cmd);
-	perror("pipex");
-	exit(EXIT_FAILURE);
+	
 }
