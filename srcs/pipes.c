@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 13:02:01 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/22 11:41:56 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/22 13:22:59 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	**get_pipes(t_data *data)
 	pipes = malloc(sizeof(*pipes) * (data->processes_n + 2));
 	if (!pipes)
 		error_handle(data, MALLOC_ERROR);
-	data->pipes[data->processes_n + 1] = NULL;
+	pipes[data->processes_n + 1] = NULL;
 	while (index < data->processes_n + 1)
 	{
 		pipes[index] = malloc(2 * sizeof(**pipes));

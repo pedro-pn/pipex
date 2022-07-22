@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 19:49:35 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/22 11:44:05 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/22 14:04:04 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	pipex_init(t_data *data, int argc, char *argv[])
 	data->pids = NULL;
 	data->pipes = NULL;
 	data->path = NULL;
+	data->cmd = NULL;
 	data->pids = get_pids(data);
 	data->pipes = get_pipes(data);
 	open_pipes(data);
@@ -49,15 +50,17 @@ void	pipex_exec(t_data *data, char *argv[], char *envp[])
 		data->cmd = get_cmd(argv[process + 2]);
 		if (get_path(data, data->cmd[0], envp)
 			&& process == data->processes_n - 1)
-			ft_printf("%s: command not found\n", data->cmd[0]);
+			ft_printf("bash: %s: command not found\n", data->cmd[0]);
 		data->pids[process] = fork();
 		if (data->pids[process] == -1)
 			error_handle(data, PROCESS_ERROR);
 		else if (data->pids[process] == 0)
 			exec_child(data, envp, process);
 		clean_array((void **)data->cmd);
+		data->cmd = NULL;
 		if (data->path)
 			free(data->path);
+		data->path = NULL;
 		process++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 14:05:18 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/22 11:38:40 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/22 14:08:27 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,16 @@ void	error_handle(t_data *data, int code)
 
 void	clean_data(t_data *data)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	if (data->pids)
 		free(data->pids);
+	if (data->path)
+		free(data->path);
 	if (data->cmd)
 		clean_array((void **)data->cmd);
-	if(data->pipes)
+	if (data->pipes)
 	{
 		while (data->pipes[index])
 		{
@@ -64,5 +66,8 @@ void	clean_data(t_data *data)
 		}
 		clean_array((void **)data->pipes);
 	}
-	
+	data->pids = NULL;
+	data->pipes = NULL;
+	data->path = NULL;
+	data->cmd = NULL;
 }

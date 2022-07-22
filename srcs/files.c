@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:28:24 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/21 22:14:17 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/22 13:38:57 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	get_user_input(t_data *data, char *delimiter)
 	middle = 0;
 	buff = ft_calloc(dlm_len + 1, sizeof(*buff));
 	if (!buff)
-		return ;
+		error_handle(data, MALLOC_ERROR);
 	while (ft_memset(buff, 0, dlm_len), read(STDIN_FILENO, buff, dlm_len))
 	{
 		i = -1;
